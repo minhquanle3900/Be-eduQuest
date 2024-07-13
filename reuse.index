@@ -1,0 +1,30 @@
+ $validator = Validator::make($request->all(), [
+            'name'          => 'required|string|min:6|max:50',
+            'username'      => 'required|string|min:6|max:50|unique:teachers,username',
+            'gender_id'     => 'required|integer',
+            'password'      => 'required|string|min:6|max:20',
+            'email'         => 'nullable|email|unique:teachers,email',
+            'permission'    => 'nullable',
+            'birthday'      => 'nullable|date',
+        ], [
+            'name.min'           => 'Tên Giáo Viên tối thiểu 6 kí tự!',
+            'name.required'         => 'Tên Giáo Viên không được để trống!',
+            'username.required'     => 'Username không được để trống!',
+            'username.unique'       => 'Username đã tồn tại!',
+            'password.required'     => 'Password không được để trống!',
+            'password.min'          => 'Password tối thiểu 6 kí tự!',
+            'email.email'           => 'Email không đúng định dạng!',
+            'email.unique'          => 'Email đã được sử dụng!',
+            'birthday.date'         => 'Ngày Sinh phải là một ngày hợp lệ!',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+
+
+use Illuminate\Support\Facades\Validator;
